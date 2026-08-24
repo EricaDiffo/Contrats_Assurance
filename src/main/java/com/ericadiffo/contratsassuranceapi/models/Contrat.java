@@ -27,7 +27,7 @@ public class Contrat {
     private String numeroContrat;
 
     @NotBlank(message = "Le type de contrat est obligatoire")
-    private String typeContat;
+    private String typeContrat;
 
     @NotNull(message = "La date de debut est obligatoire")
     private LocalDate dateDebut;
