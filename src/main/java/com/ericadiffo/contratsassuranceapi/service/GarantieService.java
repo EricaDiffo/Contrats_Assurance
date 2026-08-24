@@ -3,6 +3,7 @@ package com.ericadiffo.contratsassuranceapi.service;
 import com.ericadiffo.contratsassuranceapi.dto.GarantieRequestDTO;
 import com.ericadiffo.contratsassuranceapi.dto.GarantieResponseDTO;
 import com.ericadiffo.contratsassuranceapi.exception.ResourceNotFoundException;
+import com.ericadiffo.contratsassuranceapi.models.Contrat;
 import com.ericadiffo.contratsassuranceapi.models.Garantie;
 import com.ericadiffo.contratsassuranceapi.repository.ContratRepository;
 import com.ericadiffo.contratsassuranceapi.repository.GarantieRepository;
@@ -20,9 +21,9 @@ public class GarantieService{
     private final GarantieRepository garantieRepository;
     private final ContratRepository contratRepository;
 
-    public  GarantieResponseDTO create(GarantieResponseDTO requestDTO) {
-        var contrat = contratRepository.findById(requestDTO.getContratId())
-                .orElseThrow(() -> new ResourceNotFoundException("Contrat introuvable avec l'ID: " + requestDTO.getContratId()));
+    public GarantieResponseDTO create(GarantieRequestDTO requestDTO) {
+        Contrat contrat = contratRepository.findById(requestDTO.getContratId())
+                .orElseThrow(() -> new ResourceNotFoundException("Contrat introuvable avec l'id : " + requestDTO.getContratId()));
 
         Garantie garantie = Garantie.builder()
                 .nom(requestDTO.getNom())
@@ -31,6 +32,7 @@ public class GarantieService{
                 .franchise(requestDTO.getFranchise())
                 .contrat(contrat)
                 .build();
+
         Garantie savedGarantie = garantieRepository.save(garantie);
         return toDTO(savedGarantie);
     }

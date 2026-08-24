@@ -36,7 +36,7 @@ public class ContratService{
 
         Contrat contrat = Contrat.builder()
                 .numeroContrat(requestDTO.getNumeroContrat())
-                .typeContat(requestDTO.getTypeContrat())
+                .typeContrat(requestDTO.getTypeContrat())
                 .dateDebut(requestDTO.getDateDebut())
                 .dateFin(requestDTO.getDateFin())
                 .client(client)
@@ -53,10 +53,28 @@ public class ContratService{
     }
 
     @Transactional(readOnly = true)
+    public List<ContratResponseDTO> findAll() {
+        return contratRepository.findAll().stream()
+                .map(this::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
     public List<ContratResponseDTO> findByClientId(UUID clientId){
         return contratRepository.findByClientId(clientId).stream()
                 .map(this::toDTO)
                 .collect(Collectors.toList());
+    }
+
+    public ContratResponseDTO update(UUID id, ContratRequestDTO requestDTO) {
+        Contrat contrat = contratRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Contrat introuvable avec l'id : " + id));
+
+        contrat.setTypeContrat(requestDTO.getTypeContrat());
+        contrat.setDateFin(requestDTO.getDateFin());
+        contrat.setPrimeMensuelle(requestDTO.getPrimeMensuelle());
+
+        return toDTO(contrat);
     }
 
     public ContratResponseDTO resign(UUID id){
@@ -83,7 +101,7 @@ public class ContratService{
         return ContratResponseDTO.builder()
                 .id(contrat.getId())
                 .numeroContrat(contrat.getNumeroContrat())
-                .typeContrat(contrat.getTypeContat())
+                .typeContrat(contrat.getTypeContrat())
                 .dateDebut(contrat.getDateDebut())
                 .dateFin(contrat.getDateFin())
                 .statut(contrat.getStatut())
