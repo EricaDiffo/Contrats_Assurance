@@ -1,0 +1,13 @@
+  feature/controllers-swagger[m
+  feature/entites-jpa[m
+  feature/repositories-tests[m
+  feature/services[m
+* [32mfeature/tests-mockmvc[m
+  main[m
+  [31mremotes/origin/HEAD[m -> origin/main
+  [31mremotes/origin/feature/controllers-swagger[m
+  [31mremotes/origin/feature/entites-jpa[m
+  [31mremotes/origin/feature/repositories-tests[m
+  [31mremotes/origin/feature/services[m
+  [31mremotes/origin/feature/tests-mockmvc[m
+  [31mremotes/origin/main[m
